@@ -89,12 +89,12 @@ export function AnswerInput({
     
     // ひらがなのみの場合の検証
     if (answerFormat.length === 1 && answerFormat[0] === 'ひらがな') {
-      return /^[ひらがな\s]+$/.test(value.trim())
+      return /^[ぁ-ん\s]+$/.test(value.trim())
     }
     
     // カタカナのみの場合の検証
     if (answerFormat.length === 1 && answerFormat[0] === 'カタカナ') {
-      return /^[カタカナ\s]+$/.test(value.trim())
+      return /^[ァ-ン\s]+$/.test(value.trim())
     }
     
     // 英語のみの場合の検証
