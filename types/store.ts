@@ -29,6 +29,17 @@ export interface Puzzle extends BaseEntity {
   totalQuestions: number
 }
 
+// 謎解き詳細の型定義（統計情報付き）
+export interface PuzzleDetail extends Puzzle {
+  stats: {
+    totalPlayers: number
+    bestTime: number
+    averageTime: number
+    completionRate: number
+  }
+  questions?: (Question & { answers: Answer[] })[]
+}
+
 // 問題の型定義
 export interface Question extends BaseEntity {
   puzzleId: string
