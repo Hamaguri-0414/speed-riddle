@@ -5,11 +5,14 @@ import { devtools } from 'zustand/middleware'
 interface PuzzleSession {
   id: string
   puzzleId: string
+  startTime: number
   startedAt: Date
   currentQuestionIndex: number
   totalQuestions: number
   segmentTimes: number[]
   answers: string[]
+  correctAnswers: number
+  currentAnswer: string
   isCompleted: boolean
 }
 
@@ -20,6 +23,7 @@ interface PuzzleStore {
   // アクション
   startSession: (puzzleId: string, totalQuestions: number) => void
   updateAnswer: (answer: string) => void
+  submitAnswer: (answer: string, isCorrect: boolean) => void
   nextQuestion: () => void
   completeSession: () => void
   clearSession: () => void
@@ -37,16 +41,20 @@ export const usePuzzleStore = create<PuzzleStore>()(
       // セッションを開始
       startSession: (puzzleId, totalQuestions) => {
         const sessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+        const startTime = Date.now()
         
         set({
           currentSession: {
             id: sessionId,
             puzzleId,
+            startTime,
             startedAt: new Date(),
             currentQuestionIndex: 0,
             totalQuestions,
             segmentTimes: new Array(totalQuestions).fill(0),
             answers: new Array(totalQuestions).fill(''),
+            correctAnswers: 0,
+            currentAnswer: '',
             isCompleted: false,
           }
         })
@@ -57,6 +65,19 @@ export const usePuzzleStore = create<PuzzleStore>()(
         const session = get().currentSession
         if (!session) return
 
+        set({
+          currentSession: {
+            ...session,
+            currentAnswer: answer,
+          }
+        })
+      },
+
+      // 解答を送信
+      submitAnswer: (answer, isCorrect) => {
+        const session = get().currentSession
+        if (!session) return
+
         const newAnswers = [...session.answers]
         newAnswers[session.currentQuestionIndex] = answer
 
@@ -64,6 +85,8 @@ export const usePuzzleStore = create<PuzzleStore>()(
           currentSession: {
             ...session,
             answers: newAnswers,
+            correctAnswers: session.correctAnswers + (isCorrect ? 1 : 0),
+            currentAnswer: '',
           }
         })
       },
