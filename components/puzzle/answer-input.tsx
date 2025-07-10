@@ -80,7 +80,7 @@ export function AnswerInput({
   }
 
   const validateInput = (value: string): boolean => {
-    if (!value.trim()) return false
+    if (!value || !value.trim()) return false
     
     // 数字のみの場合の検証
     if (answerFormat.length === 1 && answerFormat[0] === '数字') {
