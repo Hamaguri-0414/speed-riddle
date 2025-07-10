@@ -2,6 +2,23 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## 重要な指示
+
+1. **日本語での回答**
+   - すべての回答は日本語で行ってください
+   - コメントやドキュメントも日本語で記述してください
+   - ただし、コード内の変数名や関数名は英語を使用してください
+
+2. **1PRごとのTODO計画**
+   - 作業を開始する前に、必ずTodoWriteツールを使用してタスクを計画してください
+   - 1つのPRに含まれる変更が大きくなりすぎないよう、適切な粒度でタスクを分割してください
+   - 各PRは1つの明確な目的を持つようにしてください
+
+3. **ブランチ作業の徹底**
+   - 必ず新しいブランチを作成してから作業を開始してください
+   - mainブランチに直接変更を加えないでください
+   - ブランチ名は作業内容を表す分かりやすい名前にしてください（例：feature/add-puzzle-list、fix/timer-bug）
+
 ## Project Overview
 
 speed-riddle is a puzzle-solving speed competition website where users challenge puzzles, compete based on completion time, and can create their own puzzles. The project is currently in the specification phase with no code implementation yet.
