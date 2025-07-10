@@ -43,8 +43,8 @@ export default function PuzzleSolvePage() {
   const puzzleId = params.id as string
   const { puzzle, currentSession, isLoading, error } = usePuzzle(puzzleId)
   const { 
-    updateCurrentAnswer, 
-    submitAnswer, 
+    updateAnswer, 
+    submitAnswer,
     nextQuestion, 
     completeSession,
     startSession 
@@ -163,7 +163,7 @@ export default function PuzzleSolvePage() {
 
   // 解答入力の更新
   const handleAnswerChange = (answer: string) => {
-    updateCurrentAnswer(answer)
+    updateAnswer(answer)
   }
 
   // 謎解きを終了
@@ -296,7 +296,7 @@ export default function PuzzleSolvePage() {
 
               <AnswerInput 
                 answerFormat={currentQuestion.answerFormat}
-                currentAnswer={currentSession.currentAnswer}
+                currentAnswer={currentSession.currentAnswer || ''}
                 onAnswerChange={handleAnswerChange}
                 onSubmitAnswer={handleSubmitAnswer}
                 isSubmitting={isSubmitting}
