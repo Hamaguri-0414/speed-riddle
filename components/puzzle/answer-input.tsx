@@ -23,11 +23,11 @@ export function AnswerInput({
   disabled = false,
   className = ''
 }: AnswerInputProps) {
-  const [localAnswer, setLocalAnswer] = useState(currentAnswer)
+  const [localAnswer, setLocalAnswer] = useState(currentAnswer || '')
   const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    setLocalAnswer(currentAnswer)
+    setLocalAnswer(currentAnswer || '')
   }, [currentAnswer])
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,7 +38,7 @@ export function AnswerInput({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    if (localAnswer.trim() && !isSubmitting && !disabled) {
+    if (localAnswer && localAnswer.trim() && !isSubmitting && !disabled) {
       onSubmitAnswer(localAnswer.trim())
     }
   }
@@ -106,7 +106,7 @@ export function AnswerInput({
   }
 
   const isValidInput = validateInput(localAnswer)
-  const canSubmit = localAnswer.trim() && isValidInput && !isSubmitting && !disabled
+  const canSubmit = localAnswer && localAnswer.trim() && isValidInput && !isSubmitting && !disabled
 
   return (
     <div className={className}>
@@ -124,7 +124,7 @@ export function AnswerInput({
             className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors ${
               disabled 
                 ? 'bg-gray-100 border-gray-300 text-gray-500 cursor-not-allowed' 
-                : isValidInput || !localAnswer.trim()
+                : isValidInput || !localAnswer || !localAnswer.trim()
                   ? 'border-gray-300 focus:border-blue-500' 
                   : 'border-red-300 focus:border-red-500 bg-red-50'
             }`}
@@ -144,7 +144,7 @@ export function AnswerInput({
         </div>
 
         {/* バリデーションメッセージ */}
-        {localAnswer.trim() && !isValidInput && (
+        {localAnswer && localAnswer.trim() && !isValidInput && (
           <div className="text-sm text-red-600">
             {answerFormat[0] === '数字' && '数字のみ入力してください'}
             {answerFormat[0] === 'ひらがな' && 'ひらがなのみ入力してください'}
